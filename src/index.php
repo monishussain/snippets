@@ -28,9 +28,9 @@
 	else { 
 	  $pn=1; 
 	};  
-
+	echo "pn".$pn;
     $start_from = ($pn-1) * $limit;  
-
+	echo "start_from".$start_from;
 	$query=$con->prepare("SELECT * FROM table2 LIMIT $start_from,$limit");
 	$query->execute(); 
 
@@ -73,13 +73,15 @@
         echo "total_records".$total_records;
         $row=$query->fetch();  
 		$total_pages = ceil($total_records / $limit);
-        $k = (($pn+4>$total_pages)?$total_pages-4:(($pn-4<1)?5:$pn));		
+		echo "total pages".$total_pages;
+		$k = (($pn+2>$total_pages)?$total_pages-2:(($pn-2<1)?3:$pn));		
+		echo "k".$k;
 		$pagLink = "";
         if($pn>=2){
-			echo "<li><a href='index.php?page=1'> &lt;&lt; </a></li>";
+
 			echo "<li><a href='index.php?page=".($pn-1)."'> &lt; </a></li>";
 		}
-		for ($i=-4; $i<=4; $i++) {
+		for ($i=-2; $i<=2; $i++) {
 		  if($k+$i==$pn)
 		    $pagLink .= "<li class='active'><a href='index.php?page=".($k+$i)."'>".($k+$i)."</a></li>";
 		  else
@@ -88,7 +90,7 @@
 		echo $pagLink;
 		if($pn<$total_pages){
 			echo "<li><a href='index.php?page=".($pn+1)."'> &gt; </a></li>";
-			echo "<li><a href='index.php?page=".$total_pages."'> &gt;&gt; </a></li>";
+
 		}	
 	  ?>
       </ul>
